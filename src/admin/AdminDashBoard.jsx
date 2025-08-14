@@ -6,6 +6,7 @@ import { useGetAllTransactionsQuery } from "@/app/api/transactionApiSlice";
 import { useGetServicesQuery } from "@/app/api/serviceApiSlice";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert" 
 import { Terminal } from "lucide-react"
+import ErrorBoundary from "@/components/ErrorBoundary"
 
 // Import Admin Components
 import AdminDashboardSidebar from "./AdminComponents/Sidebar";
@@ -94,27 +95,29 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <AdminDashboardSidebar
-        isOpen={sidebarOpen}
-        setIsOpen={setSidebarOpen}
-        activeView={activeView}
-        onNavigate={handleNavigate}
-      />
+    <ErrorBoundary>
+      <div className="min-h-screen bg-gray-100">
+        <AdminDashboardSidebar
+          isOpen={sidebarOpen}
+          setIsOpen={setSidebarOpen}
+          activeView={activeView}
+          onNavigate={handleNavigate}
+        />
 
-      <div className="flex flex-col flex-1 lg:pl-64">
-        {/* Pass the handleNavigate function to the Header */}
-        <Header onMenuClick={() => setSidebarOpen(true)} onNavigate={handleNavigate} />
+        <div className="flex flex-col flex-1 lg:pl-64">
+          {/* Pass the handleNavigate function to the Header */}
+          <Header onMenuClick={() => setSidebarOpen(true)} onNavigate={handleNavigate} />
 
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-hidden mt-16">
-          <div
-            key={activeView}
-            className="animate-in slide-in-from-bottom-5 fade-in-0 duration-500"
-          >
-            {renderContent(activeView, allUsers, allServices, allTransactions, isLoading)}
-          </div>
-        </main>
+          <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-hidden mt-16">
+            <div
+              key={activeView}
+              className="animate-in slide-in-from-bottom-5 fade-in-0 duration-500"
+            >
+              {renderContent(activeView, allUsers, allServices, allTransactions, isLoading)}
+            </div>
+          </main>
+        </div>
       </div>
-    </div>
+    </ErrorBoundary>
   );
 }

@@ -38,7 +38,7 @@ export default function ServiceCardsViewer({ services = [], pricingPlans = [], i
       sub => new Date(sub.expiresAt) > new Date()
     );
     const staticPlanMap = new Map(
-      pricingPlans.map(p => [p.name, p.includedServices.map(s => s._id)])
+      pricingPlans.map(p => [p.name, (p.includedServices || []).filter(s => s?._id).map(s => s._id)])
     );
     activeUserSubs.forEach(sub => {
       const subName = sub.category;

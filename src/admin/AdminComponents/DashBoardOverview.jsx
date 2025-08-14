@@ -408,7 +408,7 @@ export default function DashboardOverview() {
           date: `${i.toString().padStart(2, '0')}:00`,
           revenue: hourTransactions.reduce((sum, t) => sum + (t.status === 'completed' ? t.amount : 0), 0),
           transactions: hourTransactions.length,
-          users: new Set(hourTransactions.map(t => t.user._id)).size
+          users: new Set(hourTransactions.filter(t => t.user?._id).map(t => t.user._id)).size
         });
       }
     } else if (timeFilter === 'all' && daysToTrack > 90) {
@@ -434,7 +434,7 @@ export default function DashboardOverview() {
           date: monthStart.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
           revenue: monthTransactions.reduce((sum, t) => sum + (t.status === 'completed' ? t.amount : 0), 0),
           transactions: monthTransactions.length,
-          users: new Set(monthTransactions.map(t => t.user._id)).size
+          users: new Set(monthTransactions.filter(t => t.user?._id).map(t => t.user._id)).size
         });
       }
     } else {
@@ -451,7 +451,7 @@ export default function DashboardOverview() {
           date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
           revenue: dayTransactions.reduce((sum, t) => sum + (t.status === 'completed' ? t.amount : 0), 0),
           transactions: dayTransactions.length,
-          users: new Set(dayTransactions.map(t => t.user._id)).size
+          users: new Set(dayTransactions.filter(t => t.user?._id).map(t => t.user._id)).size
         });
       }
     }

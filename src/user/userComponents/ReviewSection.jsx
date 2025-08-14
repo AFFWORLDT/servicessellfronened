@@ -127,12 +127,12 @@ export default function ReviewSection({ serviceId }) {
             <><ReviewSkeleton /><ReviewSkeleton /><ReviewSkeleton /></>
           ) : (
             <>
-              {myReviews.length > 0 && myReviews.map((review) => (
+              {myReviews.length > 0 && myReviews.filter(review => review?._id).map((review) => (
                 <ReviewCard key={review._id} review={review} isCurrentUserReview={true} onEdit={handleEdit} onDelete={handleDelete} />
               ))}
               {myReviews.length > 0 && otherReviews.length > 0 && <hr className="my-6 border-gray-200" />}
               {otherReviews.length > 0 ? (
-                otherReviews.map((review) => <ReviewCard key={review._id} review={review} />)
+                otherReviews.filter(review => review?._id).map((review) => <ReviewCard key={review._id} review={review} />)
               ) : (
                 myReviews.length === 0 && <p className="text-center text-gray-500 py-8">No customer reviews yet. Be the first!</p>
               )}
